@@ -1,0 +1,12 @@
+{% load i18n %}
+
+{% block title %}
+  <title>{% trans "Active account" %}</title>
+{% endblock title %}
+
+{% block content %}
+  <h1>{% trans "Hello" %} {{ params.username }},</h1>
+  <p>{% trans "Please click on the link below to activate your account:" %}</p>
+  <a href="{{ params.link }}" class="button-verify">{% trans "Verify Email" %}</a>
+  <p>{% trans "Sincerely" %}</p>
+{% endblock content %}

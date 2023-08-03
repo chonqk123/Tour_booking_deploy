@@ -1,0 +1,26 @@
+{% extends "base_generic.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<div class="registration-container">
+    <div class="registration-body">
+        <form class="registration-form" method="post">
+            {% csrf_token %}
+            <fieldset>
+                <legend>{% trans "Register an account" %}</legend>
+                {% for field in form %}
+                    <div class="form-group">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                            <p style="color: red;">{{ field.errors|join:", " }}</p>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                <button type="submit">{% trans "Submit" %}</button>
+            </fieldset>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% load i18n %}
+
+{% block title %}
+    <title>{% trans "Email Sent Successfully" %}</title>
+{% endblock title %}
+{% block content %}
+    <h1>{% trans "Email Sent Successfully!" %}</h1>
+    <p>{% trans "Your email has been sent successfully." %}</p>
+    <a href="{% url 'login' %}" class="button-login">{% trans "Return to Login" %}</a>
+{% endblock content %}

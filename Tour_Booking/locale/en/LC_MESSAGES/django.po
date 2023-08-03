@@ -1,0 +1,235 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-08-02 10:13-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: tour_booking/forms.py:10
+msgid "key search"
+msgstr "Từ khóa tìm kiếm"
+
+#: tour_booking/forms.py:11
+msgid "Minimum Price"
+msgstr "Giá từ"
+
+#: tour_booking/forms.py:12
+msgid "Maximum Price"
+msgstr "Đến"
+
+#: tour_booking/forms.py:13
+msgid "Start day"
+msgstr "Bắt đầu"
+
+#: tour_booking/forms.py:14
+msgid "End day"
+msgstr "Kết thúc"
+
+#: tour_booking/forms.py:15
+msgid "Address"
+msgstr "Địa điểm"
+
+#: tour_booking/templates/email/activation_email.html:5
+msgid "Active account"
+msgstr "kích hoạt tài khoản"
+
+#: tour_booking/templates/email/activation_email.html:9
+msgid "Hello"
+msgstr "Xin Chào"
+
+#: tour_booking/templates/email/activation_email.html:10
+msgid "Please click on the link below to activate your account:"
+msgstr "Vui lòng nhấn vào liên kết bên dưới để kích hoạt tài khoản của bạn:"
+
+#: tour_booking/templates/email/activation_email.html:12
+msgid "Sincerely"
+msgstr "Trân trọng"
+
+#: tour_booking/templates/email/send_mail_success.html:4
+msgid "Email Sent Successfully"
+msgstr "Email đã được gửi thành công"
+
+#: tour_booking/templates/email/send_mail_success.html:7
+msgid "Email Sent Successfully!"
+msgstr "Email đã được gửi thành công!"
+
+#: tour_booking/templates/email/send_mail_success.html:8
+msgid "Your email has been sent successfully."
+msgstr "Email của bạn đã được gửi thành công"
+
+#: tour_booking/templates/email/send_mail_success.html:9
+msgid "Return to Login"
+msgstr "Trở về trang đăng nhập"
+
+#: tour_booking/templates/login.html:9 tour_booking/templates/login.html:17
+#: tour_booking/templates/navbar.html:10
+msgid "Login"
+msgstr "Đăng nhập"
+
+#: tour_booking/templates/login.html:13
+msgid "User name:"
+msgstr "Tên đăng nhập"
+
+#: tour_booking/templates/login.html:15
+msgid "Password:"
+msgstr "Mật khẩu"
+
+#: tour_booking/templates/login.html:19
+msgid "Forgot password?"
+msgstr "Quên mật khẩu"
+
+#: tour_booking/templates/login.html:22
+msgid "Don't have an account? Register here."
+msgstr "Đăng ký tài khoản"
+
+#: tour_booking/templates/navbar.html:3
+msgid "Home"
+msgstr "Trang chủ"
+
+#: tour_booking/templates/navbar.html:4
+msgid "Tour List"
+msgstr "Danh sách Tour"
+
+#: tour_booking/templates/navbar.html:5
+msgid "About"
+msgstr "About"
+
+#: tour_booking/templates/navbar.html:8
+msgid "Logout"
+msgstr "Đăng xuất"
+
+#: tour_booking/templates/signup.html:11
+msgid "Register an account"
+msgstr "Đăng ký tài khoản"
+
+#: tour_booking/templates/signup.html:21
+msgid "Submit"
+msgstr "Đăng ký"
+
+#: tour_booking/templates/tour_booking/list_bookings.html:12
+msgid "Danh sách tour đã đặt"
+msgstr ""
+
+#: tour_booking/templates/tour_booking/list_bookings.html:17
+msgid "Tour:"
+msgstr ""
+
+#: tour_booking/templates/tour_booking/list_bookings.html:18
+msgid "Ngày khởi hành:"
+msgstr ""
+
+#: tour_booking/templates/tour_booking/list_bookings.html:19
+msgid "Ngày kết thúc:"
+msgstr ""
+
+#: tour_booking/templates/tour_booking/list_bookings.html:20
+msgid "Số lượng người:"
+msgstr ""
+
+#: tour_booking/templates/tour_booking/list_bookings.html:21
+msgid "Giá:"
+msgstr ""
+
+#: tour_booking/templates/tour_booking/list_bookings.html:22
+msgid "Tình trạng:"
+msgstr ""
+
+#: tour_booking/templates/tour_booking/list_bookings.html:28
+msgid "Delete"
+msgstr ""
+
+#: tour_booking/templates/tour_booking/list_bookings.html:35
+msgid "Bạn chưa có tour nào đã đặt."
+msgstr ""
+
+#: tour_booking/templates/tour_booking/tour_detail.html:6
+msgid "Description:"
+msgstr "Mô tả"
+
+#: tour_booking/templates/tour_booking/tour_detail.html:7
+msgid "Price:"
+msgstr "Giá"
+
+#: tour_booking/templates/tour_booking/tour_detail.html:8
+#, fuzzy
+#| msgid "Start day"
+msgid "Start Date:"
+msgstr "Bắt đầu"
+
+#: tour_booking/templates/tour_booking/tour_detail.html:9
+#, fuzzy
+#| msgid "Date:"
+msgid "End Date:"
+msgstr "Ngày"
+
+#: tour_booking/templates/tour_booking/tour_detail.html:10
+msgid "Stars:"
+msgstr "Đánh giá"
+
+#: tour_booking/templates/tour_booking/tour_detail.html:22
+#, fuzzy
+#| msgid "Booking Tour"
+msgid "Book Tour"
+msgstr "Đặt Tour"
+
+#: tour_booking/templates/tour_booking/tour_list.html:6
+msgid "List Tour"
+msgstr "Danh sách Tour"
+
+#: tour_booking/templates/tour_booking/tour_list.html:10
+msgid "Search"
+msgstr "Tìm kiếm"
+
+#: tour_booking/templates/tour_booking/tour_list.html:26
+msgid "There are no tours available."
+msgstr "Hiện không có tour"
+
+#: tour_booking/views.py:21
+msgid "Home Page"
+msgstr "Trang chủ"
+
+#: tour_booking/views.py:40
+msgid "Đăng nhập không thành công. Vui lòng thử lại."
+msgstr ""
+
+#: tour_booking/views.py:81
+msgid "Bạn chỉ được đặt tour cho tương lai."
+msgstr ""
+
+#: tour_booking/views.py:201
+msgid "You have successfully registered an account at Tour Booking"
+msgstr "Bạn đã đăng ký thành công tài khoản tại Tour Booking"
+
+#: tour_booking/views.py:224
+msgid "Your account has been activated. You can now log in."
+msgstr "Tài khoản của bạn đã được kích hoạt. Bây giờ bạn có thể đăng nhập."
+
+#: tour_booking/views.py:227
+msgid "Invalid activation link."
+msgstr "Liên kết kích hoạt không hợp lệ."
+
+#, fuzzy
+#~| msgid "search by price"
+#~ msgid "search tour"
+#~ msgstr "Tìm kiếm"
+
+#~ msgid "search by price"
+#~ msgstr "Tìm theo giá"
+
+#, fuzzy
+#~| msgid "Price:"
+#~ msgid "Price"
+#~ msgstr "Giá"
