@@ -91,15 +91,25 @@ class TourDetailView(generic.DetailView):
 @login_required
 def list_bookings(request):
     if request.method == 'POST':
-        booking_id = request.POST.get('booking_id')  # Lấy id của booking được gửi từ form
+        booking_id = request.POST.get('booking_id')
 
         if booking_id:
             booking = get_object_or_404(Booking, pk=booking_id, user=request.user)
 
-            if booking.status == 'Pending':  # Chỉ cho phép hủy tour khi booking đang ở trạng thái "Pending"
+            if booking.status == 'Pending':
+                # Lưu trạng thái hủy đơn và gửi email thông báo
                 booking.status = 'Cancelled'
                 booking.save()
-                
+
+                # Gửi email thông báo hủy đơn thành công
+                context = {'user': booking.user, 'tour': booking.tour}
+                message = render_to_string('email/email_notification_cancelled.html', context)
+                subject = 'Hủy đơn đặt tour'
+                from_email = settings.EMAIL_HOST_USER
+                recipient_list = [booking.user.email]
+                send_mail(subject, message, from_email, recipient_list, html_message=message)
+
+
     bookings = Booking.objects.filter(user=request.user)
     return render(request, 'tour_booking/list_bookings.html', {'bookings': bookings})
 

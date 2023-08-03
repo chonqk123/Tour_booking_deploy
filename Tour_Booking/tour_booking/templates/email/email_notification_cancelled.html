@@ -1,13 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Tour Booking Cancelled</title>
-</head>
-<body>
-    <p>Xin chào {{ user.username }},</p>
-    <p>Chúng tôi rất tiếc thông báo rằng đơn đặt tour "{{ tour.name }}" của bạn đã bị hủy.</p>
-    <p>Xin lỗi vì bất kỳ sự bất tiện nào đã gây ra.</p>
-    <p>Trân trọng,</p>
-    <p>Đội ngũ Tour Booking</p>
-</body>
-</html>
+{% load i18n %}
+
+{% block title %}
+    <title>{% trans "Tour Booking Cancelled" %}</title>
+{% endblock title %}
+{% block content %}
+    <p>{% trans "Hello" %} {{ user.username }},</p>
+    <p>{% trans "We regret to inform you that your booking for '{{ tour.name }}' has been cancelled." %}</p>
+    <p>{% trans "We apologize for any inconvenience caused." %}</p>
+    <p>{% trans "Best regards," %}</p>
+    <p>{% trans "Tour Booking Team" %}</p>
+{% endblock content %}
