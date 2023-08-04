@@ -28,7 +28,6 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Trong settings.py
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
-DEBUG = True
 
 DATABASE_URL = 'mysql://root:22102002@localhost:3306/my_booking'
 
@@ -40,6 +39,7 @@ CORS_ALLOWED_ORIGINS = [
     # Add other trusted origins here if needed
 ]
 
+DEBUG = True
 
 # Application definition
 
@@ -93,8 +93,8 @@ WSGI_APPLICATION = 'booking.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-import pymysql
-pymysql.install_as_MySQLdb()
+#import pymysql
+#pymysql.install_as_MySQLdb()
 
 DATABASES = {
     "default": {
