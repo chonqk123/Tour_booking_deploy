@@ -7,7 +7,7 @@ from .forms import TourSearchForm, BookingForm, RatingCommentForm, CustomUserCre
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.utils.http import urlsafe_base64_decode
-from django.utils.encoding import force_text
+#from django.utils.encoding import force_text
 from django.contrib import messages
 from django.utils.translation import gettext
 from django.utils import timezone
@@ -181,10 +181,14 @@ def sign_up(request):
 
 def activate_account(request, uidb64):
     try:
-        uid = force_text(urlsafe_base64_decode(uidb64))
+        uid = str(urlsafe_base64_decode(uidb64), 'utf-8')
         user = get_user_model().objects.get(pk=uid)
     except (TypeError, ValueError, OverflowError, get_user_model().DoesNotExist):
         user = None
+
+    print("uidb64:", uidb64)
+    print("uid:", uid)
+    print("user:", user)
 
     if user is not None:
         user.is_active = True
