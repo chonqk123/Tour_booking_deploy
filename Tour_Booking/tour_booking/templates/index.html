@@ -1,2 +1,14 @@
 {% extends "base_generic.html" %}
-{% block content %}<div>{{ title }}</div>{% endblock %}
+{% load static %}
+{% block content %}
+  <div class="container">
+    <div class="jumbotron mt-4 text-center"> <!-- Add 'text-center' class here -->
+      <h1 class="display-4">Chào mừng đến với Tour Booking</h1>
+      <p class="lead">Bạn muốn khám phá những điểm đến mới? Hãy tìm kiếm và đặt tour ngay!</p>
+      <hr class="my-4">
+    </div>
+  </div>
+  <div class="container d-flex justify-content-center">
+    <img src="{% static 'images/home_page.jpg' %}" alt="Homepage Image" class="img-fluid mt-4">
+  </div>
+{% endblock %}

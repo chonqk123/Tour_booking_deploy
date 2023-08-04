@@ -1,12 +1,13 @@
-{% load i18n %}
-
-{% block title %}
-    <title>{% trans "Tour Booking Approved" %}</title>
-{% endblock title %}
-{% block content %}
-    <p>{% trans "Hello" %} {{ user.username }},</p>
-    <p>{% trans "Your tour booking for '{{ tour.name }}' has been confirmed." %}</p>
-    <p>{% trans "Thank you for using our service." %}</p>
-    <p>{% trans "Best regards," %}</p>
-    <p>{% trans "Tour Booking Team" %}</p>
-{% endblock content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tour Booking Approved</title>
+</head>
+<body>
+    <p>Xin chào {{ user.username }},</p>
+    <p>Đơn đặt tour "{{ tour.name }}" của bạn đã được xác nhận.</p>
+    <p>Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi.</p>
+    <p>Trân trọng,</p>
+    <p>Đội ngũ Tour Booking</p>
+</body>
+</html>

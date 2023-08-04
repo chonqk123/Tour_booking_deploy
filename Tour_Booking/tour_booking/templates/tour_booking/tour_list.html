@@ -1,28 +1,36 @@
 {% extends "base_generic.html" %}
 {% load static %}
-{%load i18n%}
+{% load i18n %}
 
 {% block content %}
-  <h1>{% trans "List Tour"%}</h1>
+  <h1>{% trans "List Tour" %}</h1>
   <div class="form_search">
-  <form class= "form-inline mb-3" method="GET">
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary ml-2">{%trans "Search"%}</button>
-  </form>
+    <form class="form-inline mb-5" method="GET">
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-primary ml-2">{% trans "Search" %}</button>
+    </form>
   </div>
-  <p>{{context}}</p>
   {% if tour_list %}
-    <ul>
+    <div class="row">
       {% for tour in tour_list %}
-        <li>
-          <a href="{{ tour.get_absolute_url }}">{{ tour.name }}</a> - {{ tour.price }}
-        </li>
-        {% for image in tour.image_set.all %}
-          <img src="{{ image.image.url }}" alt="image_tour" class="mt-2" width="30%" height="20%">
-        {% endfor %}
+        <div class="col-md-4">
+          <div class="card mb-4">
+            <img src="{% if tour.image_set.exists %}{{ tour.image_set.first.image.url }}{% else %}{% static 'path/to/default/image.jpg' %}{% endif %}" class="card-img-top" alt="Tour Image" width="50%" height="20%">
+            <div class="card-body">
+              <h5 class="card-title">{{ tour.name }}</h5>
+              <p class="card-text">
+                <strong>{% trans "Price" %}:</strong> {{ tour.price }}<br>
+                <strong>{% trans "Start Date" %}:</strong> {{ tour.start_date }}<br>
+                <strong>{% trans "End Date" %}:</strong> {{ tour.end_date }}<br>
+                <strong>{% trans "Description" %}:</strong> {{ tour.description }}<br>
+              </p>
+              <a href="{{ tour.get_absolute_url }}" class="btn btn-primary">{% trans "View Details" %}</a>
+            </div>
+          </div>
+        </div>
       {% endfor %}
-    </ul>
+    </div>
   {% else %}
-    <p>{% trans "There are no tours available."%}</p>
+    <p>{% trans "There are no tours available." %}</p>
   {% endif %}
 {% endblock %}
