@@ -160,7 +160,7 @@ def sign_up(request):
             password = form.cleaned_data["password1"]
             token = uuid.uuid4()
             user = get_user_model().objects.create_user(username, email, password)
-            user.is_active = False
+            user.is_active = True
             user.save()
             HOST = "http://localhost:8000"
             link =  HOST + reverse_lazy("login")

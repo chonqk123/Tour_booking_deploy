@@ -22,24 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 SECRET_KEY = 'django-insecure-s5n+@ivixf2=377f)+0b%nexxy#ki19bum)8c+0h00sc8^rdgm'
-DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-# Trong settings.py
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
 DEBUG = True
-
-DATABASE_URL = 'mysql://root:22102002@localhost:3306/my_booking'
-
-ALLOWED_HOSTS = ["tourbookingdeploy-production.up.railway.app",'https://*.127.0.0.1']
-CSRF_TRUSTED_ORIGINS = ["https://tourbookingdeploy-production.up.railway.app",'https://*.127.0.0.1']
-
-CORS_ALLOWED_ORIGINS = [
-    "https://tourbookingdeploy-production.up.railway.app",
-    # Add other trusted origins here if needed
-]
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -101,7 +84,6 @@ DATABASES = {
         "ENGINE": "django.db.backends.mysql",
         "OPTIONS": {
             "read_default_file": "./my.cnf",
-            "use_pure": True,
         },
     }
 }
