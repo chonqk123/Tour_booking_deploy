@@ -1,0 +1,10 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Danh sách tour yêu thích</h1>
+  <ul>
+    {% for favorite in favorite_tours %}
+      <li><a href="{% url 'tour-detail' favorite.tour.id %}">{{ favorite.tour.name }}</a></li>
+    {% endfor %}
+  </ul>
+{% endblock %}

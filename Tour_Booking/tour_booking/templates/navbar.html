@@ -6,7 +6,8 @@
   {% if user.is_staff %}
       <li><a href="{% url 'approve-tours' %}">{% trans "Phê duyệt Tours" %}</a></li>
   {% endif %}
-  <li><a href="{% url 'list-bookings' %}">Danh sách tour đã đặt</a></li>
+  <li><a href="{% url 'favorite-tours-list' %}">{% trans "Favorite Tours" %}</a></li>
+  <li><a href="{% url 'list-bookings' %}">{% trans "Danh sách tour đã đặt" %}</a></li>
   <li><a href="{% url 'logout' %}">{% trans "Logout" %}</a></li>
   {% else %}
   <li><a href="{% url 'login' %}">{% trans "Login" %}</a></li>

@@ -2,7 +2,7 @@ import uuid
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.translation import gettext as _
 from django.views import generic
-from .models import Tour, Booking
+from .models import Tour, Booking, FavoriteTour
 from .forms import TourSearchForm, BookingForm, RatingCommentForm, CustomUserCreationForm
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.decorators import login_required
@@ -285,4 +285,28 @@ def approve_tours(request):
     bookings = Booking.objects.all()
     return render(request, 'admin/approve_tours.html', {'bookings': bookings})
 
+
+#Like
+
+@login_required
+def toggle_favorite_tour(request, tour_id):
+    tour = get_object_or_404(Tour, pk=tour_id)
+    favorite, created = FavoriteTour.objects.get_or_create(user=request.user, tour=tour)
+
+    if not created:
+        favorite.delete()
+
+    return redirect('tour-detail', pk=tour_id)  # Chuyển hướng trở lại trang chi tiết tour
+
+
+
+def favorite_tours_list(request):
+    user = request.user
+    favorite_tours = FavoriteTour.objects.filter(user=user)
+    
+    context = {
+        'favorite_tours': favorite_tours,
+    }
+    
+    return render(request, 'tour_booking/favorite_tours_list.html', context)
 
