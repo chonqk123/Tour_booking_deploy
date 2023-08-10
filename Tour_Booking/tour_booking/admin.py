@@ -11,6 +11,7 @@ class TourAmin(admin.ModelAdmin):
     search_fields = ('name',)
     filter = ('start_date','end_date','location','created_at')
     inlines = [ImageInline]
+    change_list_template = "admin/import_file_tour.html"
 
 admin.site.register(Tour, TourAmin)
 

@@ -23,4 +23,5 @@ urlpatterns = [
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
     path('toggle-favorite/<int:tour_id>/', views.toggle_favorite_tour, name='toggle-favorite-tour'),
     path('favorite-tours/', views.favorite_tours_list, name='favorite-tours-list'),
+    path('upload-tour-data/', views.upload_tour_data, name='upload_tour_data'),
 ]

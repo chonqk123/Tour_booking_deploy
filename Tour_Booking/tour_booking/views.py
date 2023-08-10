@@ -1,4 +1,6 @@
 import uuid
+import pandas as pd
+import re
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.translation import gettext as _
 from django.views import generic
@@ -17,7 +19,9 @@ from django.http import HttpResponse
 from django.template.loader import render_to_string
 from django.core.mail import send_mail
 from django.conf import settings
-
+from django.contrib.admin.views.decorators import staff_member_required
+from django.shortcuts import render, redirect
+from datetime import datetime
 # Create your views here.
 def index(request):
     context = {"title": gettext("Home Page")}
@@ -310,3 +314,54 @@ def favorite_tours_list(request):
     
     return render(request, 'tour_booking/favorite_tours_list.html', context)
 
+
+
+def parse_date(date_str):
+    match = re.search(r'(\d+)\s+tháng\s+(\d+)\s+năm\s+(\d+)', date_str)
+    if match:
+        day = match.group(1)
+        month = match.group(2)
+        year = match.group(3)
+        formatted_date = f'{day}/{month}/{year}'
+        return datetime.strptime(formatted_date, '%d/%m/%Y')
+    return None
+
+@staff_member_required
+def upload_tour_data(request):
+    if request.method == 'POST':
+        excel_file = request.FILES['excel_file']
+        if excel_file.name.endswith('.xlsx'):
+            df = pd.read_excel(excel_file)
+
+            success_count = 0
+            failed_count = 0
+            failed_details = []
+
+            for index, row in df.iterrows():
+                try:
+                    tour = Tour(
+                        name=row['Title'],
+                        location=row['Location'],
+                        price=row['Price'],
+                        average_rating=row['Rating'],
+                        start_date=row['Start Date'],
+                        end_date=row['End Date'],
+                        description=row['Description'],
+                    )
+                    tour.save()
+                    success_count += 1
+                except Exception as e:
+                    failed_count += 1
+                    failed_details.append(f"Row {index+2}: {str(e)}")
+
+            messages.success(request, f'Successfully imported {success_count} tours.')
+            if failed_count > 0:
+                failed_message = f'Failed to import {failed_count} tours. Errors:\n'
+                failed_message += '\n'.join(failed_details)
+                messages.error(request, failed_message)
+
+            return redirect('admin:tour_booking_tour_changelist')
+        else:
+            messages.error(request, 'Please upload a valid Excel file.')
+
+    return render(request, 'admin/upload_tour_data.html')
