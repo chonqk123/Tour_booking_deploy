@@ -27,6 +27,7 @@ class BookingForm(forms.ModelForm):
 
 
 class RatingCommentForm(forms.ModelForm):
+    content = forms.CharField(label="", widget=forms.Textarea(attrs={'class': 'form-control','placeholder': 'Text goes here!!!','rows':'3','cols':'20'}))
     rating = forms.IntegerField(
         validators=[MinValueValidator(1), MaxValueValidator(5)],
         label='Rating',
@@ -36,6 +37,12 @@ class RatingCommentForm(forms.ModelForm):
     class Meta:
         model = Rating
         fields = ('rating', 'content')
+
+class RepliesForm(forms.ModelForm):
+    content = forms.CharField(label="", widget=forms.Textarea(attrs={'class': 'form-control','placeholder': 'Text goes here!!!','rows':'2','cols':'20'}))
+    class Meta:
+        model = Rating
+        fields = ('content',)  
 
 
 class CustomUserCreationForm(UserCreationForm):

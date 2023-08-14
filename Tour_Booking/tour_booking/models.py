@@ -94,6 +94,8 @@ class Rating(models.Model):
     rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
     content = models.TextField()
     create_time = models.DateTimeField(auto_now_add=True)
+    reply = models.ForeignKey('Rating', null=True, related_name="replies", on_delete=models.CASCADE)
+
 
     def get_star_rating(self):
         return "★" * self.rating

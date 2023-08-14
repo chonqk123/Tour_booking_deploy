@@ -26,7 +26,7 @@
         <p>{% trans "Stars:" %} {{ tour.calculate_stars }}</p>
     </div>
     <div class="col-md-2">
-        <h2>Đặt tour</h2>
+        <h2>{% trans "Book tour" %}</h2>
         {% if error_message %}
         <p style="color: red;">{{ error_message }}</p>
         {% endif %}
@@ -37,20 +37,57 @@
         </form>
     </div>
 </div>
-<h2>Comment</h2>
-{% for comment in tour.rating_set.all %}
-<h5>{{ comment.user.username }} - {{ comment.create_time }}</h5>
-<p>{{ comment.get_star_rating }}</p>
-<p>{{ comment.content }}</p>
-{% endfor %}
-{% if user.is_authenticated %}
-<h2>Đánh giá và bình luận tour</h2>
-{% if tour %}
-<form method="post" action="{% url 'tour-rating-comment' tour.pk %}">
-    {% csrf_token %}
-    {{ rating_comment_form.as_p }}
-    <button type="submit">Gửi đánh giá và bình luận</button>
-</form>
-{% endif %}
-{% endif %}
+<div class="comment-form">
+    <h2>{% trans "Rating and comment" %}</h2>
+    <form method="post" action="{% url 'tour-rating-comment' tour.pk %}">
+        {% csrf_token %}
+        {{ rating_comment_form.as_p }}
+        <div class="d-flex justify-content-end">
+        <p><button type="submit">{% trans "Submit ratings and comments" %}</button></p>
+        </div>
+    </form>
+</div>
+<div class="main-comment-section">
+    {{comments.count}} comment {{comments|pluralize}}
+    {% for comment in comments %}
+    <blockquote class="blockquote">
+        <p class="mb-0">{{ comment.content }} {{ comment.get_star_rating }}</p>
+        <p><footer class="blockquote-footer"> by<cite title="Source Title">{{ comment.user|capfirst }} {{ comment.create_time }}</cite>
+            <button class="btn btn-success ml-auto toggle-reply-form">{% trans "Reply" %}</button></footer></p>
+
+    </blockquote>
+    {% for reply in comment.replies.all %}
+    <div class="replied-comments container mt-2 ml-4">
+        <blockquote class="blockquote">
+            <p class="mb-0">{{ reply.content }}</p>
+            <p><footer class="blockquote-footer"> by<cite title="Source Title">{{ reply.user|capfirst }} {{ comment.create_time }}</cite></footer></p>
+        </blockquote>
+    </div>
+    {% endfor %}
+    <div class="replied-comments container mt-2">
+        <div class="form-group row">
+            <form method="post" action="{% url 'submit-reply-comment' tour.pk %}" class="reply-form d-none">
+                {% csrf_token %}
+                {{ replies_comment_form.as_p }}
+                <div class="d-flex justify-content-end">
+                <input type="hidden" name="parent_comment_id" value="{{ comment.id }}">
+                <button type="submit" class="btn btn-success">{% trans "Submit Reply" %}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const toggleReplyFormButtons = document.querySelectorAll('.toggle-reply-form');
+        const replyForms = document.querySelectorAll('.reply-form');
+    
+        toggleReplyFormButtons.forEach(function(button, index) {
+            button.addEventListener('click', function() {
+                replyForms[index].classList.toggle('d-none');
+            });
+        });
+    });
+    </script>
 {% endblock %}
