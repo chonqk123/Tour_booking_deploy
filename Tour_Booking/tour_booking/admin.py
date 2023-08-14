@@ -1,7 +1,10 @@
-# admin.py
+import xlwt
 from django.contrib import admin
 from .models import Tour, Booking, Image, Rating
 from django.core.exceptions import ValidationError
+from django.http import HttpResponse
+from django.utils.translation import gettext
+from datetime import datetime
 
 class ImageInline(admin.TabularInline):
     model = Image
@@ -53,6 +56,53 @@ class BookingAmin(admin.ModelAdmin):
                     f"Không thể xóa Tour '{booking.tour.name}' khi có đơn đặt đang chờ xử lý hoặc được xác nhận."
                 )
         queryset.delete()
+    @admin.action(description=gettext("Export Excel"))
+    def export_as_excel(self, request, queryset):
+        response = HttpResponse(content_type="application/ms-excel")
+        name = "BookingList" + datetime.now().strftime("%Y%m%d%H%M%s")
+        response["Content-Disposition"] = f'attachment; filename="{name}.xls"'
+
+        wb = xlwt.Workbook(encoding="utf-8")
+        ws = wb.add_sheet("Sheet1")
+
+        row_num = 0
+
+        font_style = xlwt.XFStyle()
+        font_style.font.bold = True
+
+        columns = [
+            "ID",
+            "Tour",
+            "User",
+            "Price",
+            "Number of People",
+            "Departure Date",
+            "End Date",
+        ]
+
+        for col_num in range(len(columns)):
+            ws.write(row_num, col_num, columns[col_num], font_style)
+
+        font_style = xlwt.XFStyle()
+
+        for row in queryset:
+            row_num += 1
+            tour_url = row.tour.name
+            user_url = row.user.username
+            
+            for col_num in range(len(columns)):
+                if columns[col_num] == "Departure Date" or columns[col_num] == "End Date":
+                    time = getattr(row, columns[col_num].lower().replace(" ", "_"))
+                    ws.write(row_num, col_num, time.strftime("%Y-%m-%d %H:%M"), font_style)
+                elif columns[col_num] == "Tour":
+                    ws.write(row_num, col_num, tour_url, font_style)
+                elif columns[col_num] == "User":
+                    ws.write(row_num, col_num, user_url, font_style)
+                else:
+                    ws.write(row_num, col_num, getattr(row, columns[col_num].lower().replace(" ", "_")), font_style)
+        wb.save(response)
+        return response
+    actions = [approve_booking, export_as_excel]
 
 admin.site.register(Booking, BookingAmin)
 
@@ -65,4 +115,3 @@ class RatingAdmin(admin.ModelAdmin):
     def has_add_permission(self, request):
         # Vô hiệu hóa khả năng thêm mới người dùng trong trang quản trị
         return False
-        
