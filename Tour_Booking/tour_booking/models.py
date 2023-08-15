@@ -94,14 +94,23 @@ class Rating(models.Model):
     rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
     content = models.TextField()
     create_time = models.DateTimeField(auto_now_add=True)
-    reply = models.ForeignKey('Rating', null=True, related_name="replies", on_delete=models.CASCADE)
-
+    reply = models.ForeignKey('Reply', on_delete=models.CASCADE, blank=True, null=True, related_name='replies_to')
 
     def get_star_rating(self):
         return "★" * self.rating
 
     def __str__(self):
         return f"{self.user.username} - {self.tour.name} - {self.rating}"
+
+class Reply(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField()
+    create_time = models.DateTimeField(auto_now_add=True)
+    parent_comment = models.ForeignKey(Rating, on_delete=models.CASCADE, related_name='replies', default=None)  # Set a default value
+
+    def __str__(self):
+        return f"{self.user.username} - {self.content}"
+
 
 class FavoriteTour(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
