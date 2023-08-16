@@ -398,3 +398,46 @@ def upload_tour_data(request):
             messages.error(request, 'Please upload a valid Excel file.')
 
     return render(request, 'admin/upload_tour_data.html')
+
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.shortcuts import render, redirect
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+from .forms import CustomUserChangeForm
+
+@login_required
+def update_profile(request):
+    user = request.user
+
+    if request.method == 'POST':
+        user_form = CustomUserChangeForm(request.POST, instance=user)
+        password_form = PasswordChangeForm(user, request.POST)
+
+        if user_form.is_valid() and password_form.is_valid():
+            user = user_form.save()
+
+            new_password1 = password_form.cleaned_data.get('new_password1')
+            if new_password1:
+                user.set_password(new_password1)
+                user.save()
+                update_session_auth_hash(request, user)  # Update the user's session with the new password
+
+            messages.success(request, 'Your profile has been updated.')
+            return redirect('profile')
+        else:
+            messages.error(request, 'There was an error in the form.')
+    else:
+        user_form = CustomUserChangeForm(instance=user)
+        password_form = PasswordChangeForm(user)
+
+    context = {'user_form': user_form, 'password_form': password_form}
+    return render(request, 'profile/update_profile.html', context)
+
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+
+@login_required
+def profile(request):
+    user = request.user
+    return render(request, 'profile.html', {'user': user})

@@ -66,3 +66,45 @@ class CustomUserCreationForm(UserCreationForm):
 
 class FavoriteTourForm(forms.Form):
     pass
+
+from django import forms
+from django.contrib.auth.forms import UserChangeForm
+from django.contrib.auth import get_user_model
+from .models import UserProfile
+
+User = get_user_model()
+
+class CustomUserChangeForm(UserChangeForm):
+    current_password = forms.CharField(
+        label="Current Password", widget=forms.PasswordInput
+    )
+    new_password1 = forms.CharField(
+        label="New Password", widget=forms.PasswordInput, min_length=8
+    )
+    new_password2 = forms.CharField(
+        label="Confirm New Password", widget=forms.PasswordInput, min_length=8
+    )
+
+    class Meta:
+        model = User  # Use the User model
+        fields = ('username', 'email', 'first_name', 'last_name')
+
+    def clean_current_password(self):
+        current_password = self.cleaned_data.get("current_password")
+        if not self.instance.check_password(current_password):
+            raise forms.ValidationError("Incorrect current password.")
+        return current_password
+
+    def clean_new_password2(self):
+        new_password1 = self.cleaned_data.get("new_password1")
+        new_password2 = self.cleaned_data.get("new_password2")
+        if new_password1 and new_password2 and new_password1 != new_password2:
+            raise forms.ValidationError("New passwords must match.")
+        return new_password2
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.phone_number = self.cleaned_data.get('phone_number')
+        if commit:
+            user.save()
+        return user

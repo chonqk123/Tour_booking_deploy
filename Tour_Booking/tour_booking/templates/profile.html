@@ -1,0 +1,31 @@
+{% extends "base_generic.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="card mt-4">
+          <div class="card-header">
+            <h2 class="text-center">Your Profile</h2>
+          </div>
+          <div class="card-body">
+            <div class="text-center mb-4">
+              <img src="{% static 'path_to_your_avatar_image.jpg' %}" class="rounded-circle avatar-img" alt="Avatar">
+            </div>
+            <p><strong>Account:</strong> {{ user.username }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>First Name:</strong> {{ user.first_name }}</p>
+            <p><strong>Last Name:</strong> {{ user.last_name }}</p>
+            <p><strong>Phone Number:</strong> {{ user.userprofile.phone_number }}</p>
+            <!-- Add more fields here -->
+          </div>
+          <div class="card-footer text-center">
+            <a href="{% url 'update_profile' %}" class="btn btn-primary">Edit Profile</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

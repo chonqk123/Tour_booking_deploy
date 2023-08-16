@@ -1,0 +1,29 @@
+{% extends "base_generic.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="card mt-4">
+          <div class="card-header">
+            <h2 class="text-center">Update Your Profile</h2>
+          </div>
+          <div class="card-body">
+            <form method="post">
+              {% csrf_token %}
+              {{ user_form.as_p }}
+              <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+            {% if user_form.errors %}
+              <div class="alert alert-danger mt-3">
+                <strong>Error:</strong> There was an error in the form.
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

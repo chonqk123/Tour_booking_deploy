@@ -13,6 +13,9 @@ class UserProfile(models.Model):
     activation_token = models.CharField(max_length=255)
     username = models.CharField(max_length=255)
     email = models.EmailField(max_length=255)
+    first_name = models.CharField(max_length=30, blank=True)
+    last_name = models.CharField(max_length=30, blank=True)
+    phone_number = models.CharField(max_length=15, blank=True, verbose_name='Phone Number')
 
     def __str__(self):
         return f"{self.user.username} - {self.is_active}"

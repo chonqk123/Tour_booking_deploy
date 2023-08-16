@@ -28,4 +28,6 @@ urlpatterns = [
     path('toggle-favorite/<int:tour_id>/', views.toggle_favorite_tour, name='toggle-favorite-tour'),
     path('favorite-tours/', views.favorite_tours_list, name='favorite-tours-list'),
     path('upload-tour-data/', views.upload_tour_data, name='upload_tour_data'),
+    path('profile/', views.profile, name='profile'),
+    path('update-profile/', views.update_profile, name='update_profile'),
 ]
