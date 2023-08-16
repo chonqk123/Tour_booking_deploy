@@ -10,6 +10,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("tour_booking/", include("tour_booking.urls")),
     path("i18n/", include("django.conf.urls.i18n")),
+    path("api/", include("api.urls")),
 ]
 
 if settings.DEBUG:

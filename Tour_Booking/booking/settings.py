@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'tour_booking.apps.TourBookingConfig',
     #'bootstrap5',
+    'api.apps.ApiConfig',
+    'rest_framework',
 ]
 CORS_ORIGIN_ALLOW_ALL = True
 
@@ -163,4 +165,8 @@ EMAIL_HOST_PASSWORD = os.getenv("PASS")
 # settings.py
 AUTH_USER_MODEL = 'auth.User'
 
-
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
