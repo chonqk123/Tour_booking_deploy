@@ -119,3 +119,47 @@ def submit_reply_comment_api(request, pk):
                 return Response({"message": "Invalid data"}, status=status.HTTP_400_BAD_REQUEST)
     else:
         return Response({"message": "Bạn chưa được xác nhận đặt tour, không thể bình luận."}, status=status.HTTP_400_BAD_REQUEST)
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+from django.contrib.auth import update_session_auth_hash
+from .serializers import ChangeUserInfoSerializer
+from django.contrib.auth.models import User
+
+class ChangeUserInfoAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def put(self, request):
+        user = request.user
+        serializer = ChangeUserInfoSerializer(data=request.data, context={'user': user})
+        
+        if serializer.is_valid():
+            new_username = serializer.validated_data.get('username', user.username)
+            if new_username != user.username and User.objects.filter(username=new_username).exists():
+                return Response({'message': 'Username is already taken.'}, status=status.HTTP_400_BAD_REQUEST)
+            
+            old_password = serializer.validated_data['old_password']
+            if not user.check_password(old_password):
+                return Response({'message': 'Incorrect old password.'}, status=status.HTTP_400_BAD_REQUEST)
+            
+            new_password1 = serializer.validated_data['new_password1']
+            new_password2 = serializer.validated_data['new_password2']
+            if new_password1 != new_password2:
+                return Response({'message': 'New passwords must match.'}, status=status.HTTP_400_BAD_REQUEST)
+            
+            new_first_name = serializer.validated_data.get('first_name', user.first_name)
+            new_last_name = serializer.validated_data.get('last_name', user.last_name)
+            new_email = serializer.validated_data.get('email', user.email)
+            
+            user.username = new_username
+            user.first_name = new_first_name
+            user.last_name = new_last_name
+            user.email = new_email
+            user.set_password(new_password1)
+            user.save()
+            updated_user_serializer = UserSerializer(user)
+            return Response(updated_user_serializer.data, status=status.HTTP_200_OK)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
